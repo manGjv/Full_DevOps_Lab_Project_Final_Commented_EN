@@ -5,6 +5,9 @@
  *  - Mount specific routers
  *  - Global error handler (consistent JSON for errors)
  */
+import dotenv from "dotenv";
+dotenv.config();
+
 import express from "express";
 import { errorHandler } from "./utils/errorHandler.js";
 
@@ -12,12 +15,15 @@ import { errorHandler } from "./utils/errorHandler.js";
 import versionRouter from "./routes/auto/version.route.js";
 import infoRouter from "./routes/auto/info.route.js";
 import boomRouter from "./routes/auto/boom.route.js";
+import authRouter from "./routes/auth.route.js";
 
 const app = express();
 
+app.use(express.json());
+
 // Simple root + health endpoints
 app.get("/", (_req, res) => {
-  res.json({ ok: true, message: "Hello from CI/CD demo 👋" });
+  res.json({ ok: true, message: "Hello from CI/CD demo" });
 });
 app.get("/health", (_req, res) => res.status(200).send("OK"));
 
@@ -25,6 +31,7 @@ app.get("/health", (_req, res) => res.status(200).send("OK"));
 app.use("/", versionRouter);
 app.use("/", infoRouter);
 app.use("/", boomRouter);
+app.use("/", authRouter);
 
 // Global error middleware last
 app.use(errorHandler);
