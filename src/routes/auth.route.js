@@ -75,4 +75,5 @@ router.post("/login", async (req, res) => {
     }
 });
 
+export { users };
 export default router;
