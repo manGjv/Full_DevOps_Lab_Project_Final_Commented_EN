@@ -1,6 +1,8 @@
 import request from "supertest";
 import {describe, it, expect, beforeEach} from "vitest";
 import app from "../src/app.js";
+import { users } from "../src/routes/auth.route.js";
+import bcrypt from "bcrypt";
 
 
 describe("Auth API", () => {
