@@ -17,7 +17,7 @@ import infoRouter from "./routes/auto/info.route.js";
 import boomRouter from "./routes/auto/boom.route.js";
 import authRouter from "./routes/auth.route.js";
 import usersRouter from "./routes/user.route.js";
-import coursesRouter from './routes/courses.route.js';
+import coursesRouter from "./routes/courses.route.js";
 
 const app = express();
 
@@ -35,7 +35,7 @@ app.use("/", infoRouter);
 app.use("/", boomRouter);
 app.use("/", authRouter);
 app.use("/api/users", usersRouter);
-app.use('/api/courses', coursesRouter);
+app.use("/api/courses", coursesRouter);
 
 // Global error middleware last
 app.use(errorHandler);

@@ -1,4 +1,4 @@
-import express from 'express';
+import express from "express";
 const router = express.Router();
 
 // Simulating courses stored in memory
@@ -45,17 +45,17 @@ let courses = [
 ];
 
 // GET /api/courses - List all courses with optional level filtering
-router.get('/', (req, res) => {
+router.get("/", (req, res) => {
   try {
     const { level } = req.query;
     
     // If level parameter is provided, filter courses
     if (level) {
-      const validLevels = ['beginner', 'intermediate', 'expert'];
+      const validLevels = ["beginner", "intermediate", "expert"];
       
       if (!validLevels.includes(level.toLowerCase())) {
         return res.status(400).json({ 
-          error: 'Invalid level. Must be: beginner, intermediate, or expert' 
+          error: "Invalid level. Must be: beginner, intermediate, or expert" 
         });
       }
       
@@ -77,48 +77,48 @@ router.get('/', (req, res) => {
     });
     
   } catch (error) {
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 
 // GET /api/courses/:id - Get specific course details
-router.get('/:id', (req, res) => {
+router.get("/:id", (req, res) => {
   try {
     const courseId = parseInt(req.params.id);
     
     if (isNaN(courseId)) {
-      return res.status(400).json({ error: 'Invalid course ID' });
+      return res.status(400).json({ error: "Invalid course ID" });
     }
     
     const course = courses.find(c => c.id === courseId);
     
     if (!course) {
-      return res.status(404).json({ error: 'Course not found' });
+      return res.status(404).json({ error: "Course not found" });
     }
     
     res.status(200).json(course);
     
   } catch (error) {
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 
 // POST /api/courses - Create a new course (for Content Manager)
-router.post('/', (req, res) => {
+router.post("/", (req, res) => {
   try {
     const { title, domain, level, description, lessons } = req.body;
     
     // Validation
     if (!title || !domain || !level) {
       return res.status(400).json({ 
-        error: 'Missing required fields: title, domain, level' 
+        error: "Missing required fields: title, domain, level" 
       });
     }
     
-    const validLevels = ['beginner', 'intermediate', 'expert'];
+    const validLevels = ["beginner", "intermediate", "expert"];
     if (!validLevels.includes(level.toLowerCase())) {
       return res.status(400).json({ 
-        error: 'Invalid level. Must be: beginner, intermediate, or expert' 
+        error: "Invalid level. Must be: beginner, intermediate, or expert"
       });
     }
     
@@ -128,7 +128,7 @@ router.post('/', (req, res) => {
       title,
       domain,
       level: level.toLowerCase(),
-      description: description || '',
+      description: description || "",
       lessons: lessons || [],
       enrolled: 0,
       completionRate: 0
@@ -137,12 +137,12 @@ router.post('/', (req, res) => {
     courses.push(newCourse);
     
     res.status(201).json({
-      message: 'Course created successfully',
+      message: "Course created successfully",
       course: newCourse
     });
     
   } catch (error) {
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 export default router;
