@@ -1,0 +1,227 @@
+{
+	"info": {
+		"_postman_id": "45e67e05-f295-4bd6-b50b-a256f719121e",
+		"name": "Cybersecurity Learning Platform API Tests",
+		"description": "Tests for Course Management API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "49940404",
+		"_collection_link": "https://cummings2711-7348476.postman.co/workspace/CUMMINGS-Chinyere's-Workspace~846217a7-03a6-4b17-801e-5de96a6c0bf5/collection/49940404-45e67e05-f295-4bd6-b50b-a256f719121e?action=share&source=collection_link&creator=49940404"
+	},
+	"item": [
+		{
+			"name": "Get api courses",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response has correct structure\", function () {\r",
+							"    const response = pm.response.json();\r",
+							"    pm.expect(response).to.have.property(\"count\");\r",
+							"    pm.expect(response).to.have.property(\"courses\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Courses is an array\", function () {\r",
+							"    const response = pm.response.json();\r",
+							"    pm.expect(response.courses).to.be.an(\"array\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is acceptable\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"packages": {},
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/courses",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"courses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Create Course",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response has message property\", function () {\r",
+							"    const response = pm.response.json();\r",
+							"    pm.expect(response).to.have.property(\"message\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Course was created with correct fields\", function () {\r",
+							"    const response = pm.response.json();\r",
+							"    pm.expect(response.course).to.have.property(\"id\");\r",
+							"    pm.expect(response.course).to.have.property(\"title\");\r",
+							"    pm.expect(response.course).to.have.property(\"domain\");\r",
+							"    pm.expect(response.course).to.have.property(\"level\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Course has default values\", function () {\r",
+							"    const response = pm.response.json();\r",
+							"    pm.expect(response.course.enrolled).to.equal(0);\r",
+							"    pm.expect(response.course.completionRate).to.equal(0);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Introduction to Cryptography\",\r\n  \"domain\": \"Cryptography\",\r\n  \"level\": \"beginner\",\r\n  \"description\": \"Learn the basics of encryption and decryption\",\r\n  \"lessons\": [\r\n    {\r\n      \"id\": 1,\r\n      \"name\": \"Symmetric Encryption\",\r\n      \"type\": \"video\",\r\n      \"duration\": \"20 min\"\r\n    },\r\n    {\r\n      \"id\": 2,\r\n      \"name\": \"Asymmetric Encryption\",\r\n      \"type\": \"interactive\",\r\n      \"duration\": \"30 min\"\r\n    }\r\n  ]\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/courses",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"courses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get api id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Course has required fields\", function () {\r",
+							"    const course = pm.response.json();\r",
+							"    pm.expect(course).to.have.property(\"id\");\r",
+							"    pm.expect(course).to.have.property(\"title\");\r",
+							"    pm.expect(course).to.have.property(\"domain\");\r",
+							"    pm.expect(course).to.have.property(\"level\");\r",
+							"    pm.expect(course).to.have.property(\"lessons\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Lessons is an array\", function () {\r",
+							"    const course = pm.response.json();\r",
+							"    pm.expect(course.lessons).to.be.an(\"array\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/courses/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"courses",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": ""
+		}
+	]
+}
