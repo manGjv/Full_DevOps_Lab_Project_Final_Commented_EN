@@ -16,6 +16,7 @@ import versionRouter from "./routes/auto/version.route.js";
 import infoRouter from "./routes/auto/info.route.js";
 import boomRouter from "./routes/auto/boom.route.js";
 import authRouter from "./routes/auth.route.js";
+import usersRouter from "./routes/auto/user.route.js";
 
 const app = express();
 
@@ -32,6 +33,7 @@ app.use("/", versionRouter);
 app.use("/", infoRouter);
 app.use("/", boomRouter);
 app.use("/", authRouter);
+app.use("/api/users", usersRouter);
 
 // Global error middleware last
 app.use(errorHandler);
