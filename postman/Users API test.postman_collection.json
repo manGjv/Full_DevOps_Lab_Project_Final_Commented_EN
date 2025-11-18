@@ -1,0 +1,117 @@
+{
+	"info": {
+		"_postman_id": "aa0e9a2a-a6c5-431c-aa18-52dfc01eff46",
+		"name": "Users API test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "50106100",
+		"_collection_link": "https://anaisduma-1302834.postman.co/workspace/Ana%C3%AFs-'s-Workspace~3ae74115-ec5d-46d1-803c-893431f5257f/collection/50106100-aa0e9a2a-a6c5-431c-aa18-52dfc01eff46?action=share&source=collection_link&creator=50106100"
+	},
+	"item": [
+		{
+			"name": "Get User Progress",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Vérifie que le code HTTP est 200\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Vérifie que la réponse contient les champs attendus\r",
+							"pm.test(\"Response contains progress info\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"points\");\r",
+							"    pm.expect(jsonData).to.have.property(\"hoursSpent\");\r",
+							"    pm.expect(jsonData).to.have.property(\"modulesCompleted\");\r",
+							"    pm.expect(jsonData).to.have.property(\"badges\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/users/1/progress",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						"1",
+						"progress"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User Badge",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Vérifie que le code HTTP est 200\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Vérifie que la réponse contient le champ badges\r",
+							"pm.test(\"Response contains badges\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"badges\");\r",
+							"    pm.expect(jsonData.badges).to.be.an(\"array\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/users/1/badges",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						"1",
+						"badges"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
