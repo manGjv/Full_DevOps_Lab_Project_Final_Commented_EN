@@ -34,10 +34,11 @@ app.get("/health", (_req, res) => res.status(200).send("OK"));
 app.use("/", versionRouter);
 app.use("/", infoRouter);
 app.use("/", boomRouter);
-app.use("/", authRouter);
+
 app.use("/api/users", usersRouter);
 app.use("/api/courses", coursesRouter);
 app.use("/api/quizzes", quizzesRouter);
+app.use("/api/auth", authRouter);
 
 // Global error middleware last
 app.use(errorHandler);
