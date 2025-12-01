@@ -145,4 +145,89 @@ router.post("/", (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
+// PUT /api/courses/:id - Update an existing course
+router.put("/:id", (req, res) => {
+  try {
+    const courseId = parseInt(req.params.id);
+    
+    if (isNaN(courseId)) {
+      return res.status(400).json({ error: "Invalid course ID" });
+    }
+    
+    const courseIndex = courses.findIndex(c => c.id === courseId);
+    
+    if (courseIndex === -1) {
+      return res.status(404).json({ error: "Course not found" });
+    }
+    
+    const { title, domain, level, description, lessons } = req.body;
+    
+    // Validation: at least one field should be provided
+    if (!title && !domain && !level && !description && lessons === undefined) {
+      return res.status(400).json({ 
+        error: "At least one field must be provided to update" 
+      });
+    }
+    
+    // Validate level if provided
+    if (level) {
+      const validLevels = ["beginner", "intermediate", "expert"];
+      if (!validLevels.includes(level.toLowerCase())) {
+        return res.status(400).json({ 
+          error: "Invalid level. Must be: beginner, intermediate, or expert"
+        });
+      }
+    }
+    
+    // Update only provided fields
+    const updatedCourse = {
+      ...courses[courseIndex],
+      ...(title && { title }),
+      ...(domain && { domain }),
+      ...(level && { level: level.toLowerCase() }),
+      ...(description !== undefined && { description }),
+      ...(lessons && { lessons })
+    };
+    
+    courses[courseIndex] = updatedCourse;
+    
+    res.status(200).json({
+      message: "Course updated successfully",
+      course: updatedCourse
+    });
+    
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+// DELETE /api/courses/:id - Delete a course
+router.delete("/:id", (req, res) => {
+  try {
+    const courseId = parseInt(req.params.id);
+    
+    if (isNaN(courseId)) {
+      return res.status(400).json({ error: "Invalid course ID" });
+    }
+    
+    const courseIndex = courses.findIndex(c => c.id === courseId);
+    
+    if (courseIndex === -1) {
+      return res.status(404).json({ error: "Course not found" });
+    }
+    
+    const deletedCourse = courses[courseIndex];
+    courses.splice(courseIndex, 1);
+    
+    res.status(200).json({
+      message: "Course deleted successfully",
+      course: deletedCourse
+    });
+    
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 export default router;
