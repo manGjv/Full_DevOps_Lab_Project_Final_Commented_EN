@@ -1,0 +1,154 @@
+{
+	"info": {
+		"_postman_id": "3c9ec959-9b98-4f25-bdfb-151464d80c7d",
+		"name": "CyberLearning API Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "50165367",
+		"_collection_link": "https://pierre-antoine-baudard-3805197.postman.co/workspace/PA's-Workspace~f00fed8a-aba9-4ae8-85ae-565f0a3ea7b7/collection/50165367-3c9ec959-9b98-4f25-bdfb-151464d80c7d?action=share&source=collection_link&creator=50165367"
+	},
+	"item": [
+		{
+			"name": "GET Quizzes for Course 1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/quizzes/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"quizzes",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Create New Quiz",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response has a generated ID\", function () {\r",
+							"    pm.expect(pm.response.json()).to.have.property(\"id\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"courseId\": 3,\r\n  \"title\": \"Introduction à l'Agilité\",\r\n  \"level\": \"beginner\",\r\n  \"questions\": [\r\n    {\r\n      \"qid\": 1,\r\n      \"text\": \"Quelle est la durée d'un sprint Scrum standard ?\"\r\n    }\r\n  ],\r\n  \"correctAnswers\": {\r\n    \"1\": \"Deux semaines\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/quizzes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"quizzes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Submit Answers (Quiz 101)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains score and total\", function () {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.have.property(\"score\");\r",
+							"    pm.expect(responseJson).to.have.property(\"total\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"answers\": {\r\n    \"1\": \"const\" \r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/quizzes/101/submit",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"quizzes",
+						"101",
+						"submit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Quizzes for Course 2",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/quizzes/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"quizzes",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
