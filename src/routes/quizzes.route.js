@@ -9,8 +9,7 @@ let quizzes = [
         title: "Introduction à JavaScript", 
         level: "beginner",
         questions: [{ qid: 1, text: "var vs const ?" }],
-        // CORRECTION 1 : La clé '1' doit être entre guillemets.
-        correctAnswers: { "1": "const" } // Pour la notation 
+        correctAnswers: { "1": "const" }
     },
     { 
         id: 102, 
@@ -18,7 +17,6 @@ let quizzes = [
         title: "Express Routes", 
         level: "intermediate",
         questions: [{ qid: 1, text: "Status for POST success?" }],
-        // CORRECTION 2 : La clé '1' doit être entre guillemets.
         correctAnswers: { "1": "201" }
     },
     { 
@@ -27,20 +25,16 @@ let quizzes = [
         title: "Docker Basics", 
         level: "beginner",
         questions: [{ qid: 1, text: "Command to build image?" }],
-        // CORRECTION 3 : La clé '1' doit être entre guillemets.
         correctAnswers: { "1": "docker build" }
     }
 ];
 
 // Fonction utilitaire de notation (Simplifiée)
-// La fonction calculateScore reste inchangée, car elle accède 
-// aux clés via la notation [clé] qui fonctionne pour les chaînes.
 const calculateScore = (quiz, answers) => {
     let score = 0;
     const totalQuestions = quiz.questions.length;
     
     for (const q of quiz.questions) {
-        // q.qid est 1. La ligne suivante vérifie answers[1] contre quiz.correctAnswers["1"]
         if (answers[q.qid] === quiz.correctAnswers[q.qid]) {
             score++;
         }
@@ -52,59 +46,44 @@ const calculateScore = (quiz, answers) => {
     };
 };
 
+// --- READ (R) : Récupérer tous les quizzes (/api/quizzes)
+// Correspond à "List all" dans la table des endpoints.
+router.get("/", (req, res) => {
+    // Dans une application réelle, on pourrait ajouter une pagination ou des filtres.
+    res.status(200).json(quizzes); 
+});
+
+// --- READ (R) : Récupérer les quizzes d'un cours (existant)
 // GET /api/quizzes/:courseId
 router.get("/:courseId", (req, res) => {
-    // Récupérer le courseId depuis les paramètres de l'URL
     const courseId = parseInt(req.params.courseId);
-
-    // Filtrer les quizzes par courseId
     const courseQuizzes = quizzes.filter(q => q.courseId === courseId);
 
     if (courseQuizzes.length === 0) {
-        // Retourne 404 si aucun quiz n'est trouvé pour ce cours
-        return res.status(404).json({ error: "No quizzes found for this course" });
+        return res.status(404).json({ error: "No quizzes found for this course" }); 
     }
 
     res.status(200).json(courseQuizzes);
 });
 
-// POST /api/quizzes/:id/submit
-router.post("/:id/submit", (req, res) => {
-    const quizId = parseInt(req.params.id);
-    const { answers } = req.body; // { answers: { qid: 1, "reponse" } }
-    
-    // 1. Validation de base des données
-    if (!answers || Object.keys(answers).length === 0) {
-        return res.status(400).json({ error: "Missing quiz answers" });
-    }
-
-    // 2. Trouver le quiz
-    const quiz = quizzes.find(q => q.id === quizId);
+// --- READ (R) : Récupérer un quiz par ID (Complément à l'existant)
+// Correspond à "Retrieve by ID" dans la table des endpoints, avec un ID unique pour l'entité.
+// GET /api/quizzes/quiz/:id
+router.get("/quiz/:id", (req, res) => {
+    const id = Number(req.params.id); 
+    const quiz = quizzes.find(q => q.id === id); 
 
     if (!quiz) {
-        return res.status(404).json({ error: "Quiz not found" });
+        return res.status(404).json({ error: "Quiz not found" }); 
     }
 
-    // 3. Calculer le score et le feedback (voir fonction calculateScore)
-    const result = calculateScore(quiz, answers);
-    
-    // 4. Mettre à jour la progression de l'utilisateur (logique simplifiée)
-    // Ici, vous ajouteriez la logique d'appel à l'API Progression (/api/users/{id}/progress)
-    
-    // 5. Réponse
-    res.status(200).json({
-        quizId: quizId,
-        score: result.score,
-        total: result.total,
-        percentage: (result.score / result.total) * 100,
-        feedback: result.feedback
-    });
+    res.json(quiz); 
 });
 
-// POST /api/quizzes
+// --- CREATE (C) : Créer un nouveau quiz (existant)
+// POST /api/quizzes - Correspond à "Create" dans la table des endpoints.
 router.post("/", (req, res) => {
-    // Dans une application réelle, une vérification du JWT (Content Manager role) serait ici.
-    
+    // ... (Logique de validation et de création existante)
     const { courseId, title, level, questions, correctAnswers } = req.body;
 
     if (!courseId || !title || !questions || !correctAnswers) {
@@ -120,9 +99,71 @@ router.post("/", (req, res) => {
         correctAnswers: correctAnswers
     };
 
-    quizzes.push(newQuiz);
+    quizzes.push(newQuiz); 
 
-    res.status(201).json(newQuiz); // 201 Created
+    res.status(201).json(newQuiz); // 201 Created [cite: 58]
 });
+
+// --- POST : Soumettre les réponses au quiz (existant)
+// POST /api/quizzes/:id/submit
+router.post("/:id/submit", (req, res) => {
+    // ... (Logique de soumission existante)
+    const quizId = parseInt(req.params.id);
+    const { answers } = req.body;
+    
+    if (!answers || Object.keys(answers).length === 0) {
+        return res.status(400).json({ error: "Missing quiz answers" });
+    }
+
+    const quiz = quizzes.find(q => q.id === quizId);
+
+    if (!quiz) {
+        return res.status(404).json({ error: "Quiz not found" });
+    }
+
+    const result = calculateScore(quiz, answers);
+    
+    res.status(200).json({
+        quizId: quizId,
+        score: result.score,
+        total: result.total,
+        percentage: (result.score / result.total) * 100,
+        feedback: result.feedback
+    });
+});
+
+
+// --- UPDATE (U) : Mettre à jour un quiz existant
+// PUT /api/quizzes/:id - Correspond à "Update" dans la table des endpoints.
+router.put("/:id", (req, res) => {
+    const id = Number(req.params.id); 
+    const index = quizzes.findIndex(q => q.id === id); 
+
+    if (index === -1) {
+        return res.status(404).json({ error: "Quiz not found" }); 
+    }
+    
+    // Fusionne les données existantes avec le nouveau corps de la requête (req.body)
+    quizzes[index] = { ...quizzes[index], ...req.body }; 
+    
+    res.json(quizzes[index]); 
+});
+
+// --- DELETE (D) : Supprimer un quiz
+// DELETE /api/quizzes/:id - Correspond à "Delete" dans la table des endpoints.
+router.delete("/:id", (req, res) => {
+    const id = Number(req.params.id); 
+    const before = quizzes.length; 
+    
+    // Filtre pour garder tous les quizzes dont l'ID est différent de celui à supprimer
+    quizzes = quizzes.filter(q => q.id !== id); 
+
+    if (quizzes.length === before) {
+        return res.status(404).json({ error: "Quiz not found" }); 
+    }
+    
+    res.status(204).end(); // 204 No Content - Succès sans corps de réponse [cite: 77]
+});
+
 
 export default router;
