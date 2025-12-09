@@ -1,58 +1,66 @@
+// src/routes/user.route.js
 import express from "express";
+import {
+  listUsers,
+  getUserById,
+  updateUser,
+  deleteUser,
+} from "../controllers/user.controller.js";
+
 const router = express.Router();
 
-// "Base de données" en mémoire
-let usersProgress = [
-  {
-    id: 1,
-    name: "Alice",
-    points: 120,
-    hoursSpent: 10,
-    modulesCompleted: 3,
-    badges: ["Beginner", "Fast Learner"]
-  },
-  {
-    id: 2,
-    name: "Bob",
-    points: 80,
-    hoursSpent: 5,
-    modulesCompleted: 1,
-    badges: ["Beginner"]
+// /api/users          → list
+router.get("/", listUsers);
+
+// /api/users/:id      → get one
+router.get("/:id", getUserById);
+
+// /api/users/:id      → update
+router.put("/:id", updateUser);
+
+// /api/users/:id      → delete
+router.delete("/:id", deleteUser);
+
+// BONUS: progress & badges pour les tests users.test.js / integration user.test.js
+router.get("/:id/progress", async (req, res, next) => {
+  try {
+    const user = await getUserForExtras(req, res);
+    if (!user) return;
+    res.status(200).json({
+      points: user.points || 0,
+      hoursSpent: user.hoursSpent || 0,
+    });
+  } catch (err) {
+    next(err);
   }
-];
-
-
-/* ---------------------------
-   EXTRA ROUTES (non CRUD)
-----------------------------*/
-
-// GET /api/users/:id/progress
-router.get("/:id/progress", (req, res) => {
-  const id = parseInt(req.params.id);
-  const user = usersProgress.find(u => u.id === id);
-
-  if (!user) {
-    return res.status(404).json({ error: "User not found" });
-  }
-
-  res.status(200).json({
-    points: user.points,
-    hoursSpent: user.hoursSpent,
-    modulesCompleted: user.modulesCompleted,
-    badges: user.badges
-  });
 });
 
-// GET /api/users/:id/badges
-router.get("/:id/badges", (req, res) => {
-  const id = parseInt(req.params.id);
-  const user = usersProgress.find(u => u.id === id);
-
-  if (!user) {
-    return res.status(404).json({ error: "User not found" });
+router.get("/:id/badges", async (req, res, next) => {
+  try {
+    const user = await getUserForExtras(req, res);
+    if (!user) return;
+    res.status(200).json({
+      badges: user.badges || [],
+    });
+  } catch (err) {
+    next(err);
   }
-
-  res.status(200).json({ badges: user.badges });
 });
+
+// petite fonction utilitaire pour éviter de répéter la logique
+import User from "../models/user.model.js";
+async function getUserForExtras(req, res) {
+  const { id } = req.params;
+  if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+    res.status(400).json({ message: "Invalid user ID" });
+    return null;
+  }
+  const user = await User.findById(id).lean();
+  if (!user) {
+    res.status(404).json({ message: "User not found" });
+    return null;
+  }
+  return user;
+}
 
 export default router;
