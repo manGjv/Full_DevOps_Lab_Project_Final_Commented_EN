@@ -1,13 +1,11 @@
 import { MongoClient } from "mongodb";
-import dotenv from "dotenv";
 
-dotenv.config();
-
-const client = new MongoClient(process.env.MONGO_URI);
+let client;
 let db;
 
-export async function connectToDb() {
+export async function connectToDb(uri) {
   try {
+    client = new MongoClient(uri || process.env.MONGO_URI);
     await client.connect();
     db = client.db();
     console.log("Connected to MongoDB:", db.databaseName);
@@ -22,4 +20,12 @@ export function getDb() {
     throw new Error("Database not initialized. Call connectToDb() first.");
   }
   return db;
+}
+
+// Optionnel : fonction pour fermer la connexion (utile pour les tests)
+export async function disconnectDb() {
+  if (client) {
+    await client.close();
+    db = null;
+  }
 }
