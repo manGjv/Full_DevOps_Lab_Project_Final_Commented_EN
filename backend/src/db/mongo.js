@@ -1,14 +1,16 @@
-import { MongoClient } from "mongodb";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import path from "path";
 
 let client;
 let db;
 
+dotenv.config({ path: path.resolve("../.env") }); 
+
 export async function connectToDb(uri) {
   try {
-    client = new MongoClient(uri || process.env.MONGO_URI);
-    await client.connect();
-    db = client.db();
-    console.log("Connected to MongoDB:", db.databaseName);
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log("MongoDB connected!");
   } catch (error) {
     console.error("MongoDB connection error:", error);
     process.exit(1);
@@ -22,7 +24,6 @@ export function getDb() {
   return db;
 }
 
-// Optionnel : fonction pour fermer la connexion (utile pour les tests)
 export async function disconnectDb() {
   if (client) {
     await client.close();

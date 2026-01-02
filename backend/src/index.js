@@ -1,8 +1,3 @@
-/**
- * App entrypoint.
- * We keep the HTTP listener separate from the Express app instance so
- * tests can import `app` without opening a real port.
- */
 import app from "./app.js";
 import { connectToDb } from "./db/mongo.js";
 import dotenv from "dotenv";
