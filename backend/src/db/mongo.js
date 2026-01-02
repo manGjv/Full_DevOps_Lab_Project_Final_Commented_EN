@@ -7,7 +7,7 @@ let db;
 
 dotenv.config({ path: path.resolve("../.env") }); 
 
-export async function connectToDb(uri) {
+export async function connectToDb() {
   try {
     await mongoose.connect(process.env.MONGO_URI);
     console.log("MongoDB connected!");

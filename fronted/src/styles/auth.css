@@ -3,23 +3,24 @@
   max-width: 400px;
   margin: 80px auto;
   padding: 40px 30px;
-  background: linear-gradient(135deg, #162447, #1f4068);
+  background: white;
   border-radius: 12px;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-  color: white;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
   text-align: center;
-  font-family: 'Arial', sans-serif;
+  transition: transform 0.2s;
 }
 
-/* TITRE AUTH */
-.auth-container h2 {
-  font-size: 32px;
-  margin-bottom: 25px;
-  background: white;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-weight: bold;
+.auth-container:hover {
+  transform: translateY(-3px);
 }
+
+/* Titres */
+.auth-container h2 {
+  margin-bottom: 25px;
+  color: #162447;
+  font-size: 28px;
+}
+
 
 /* INPUTS */
 .auth-container input {
@@ -80,5 +81,3 @@
 .auth-container a:hover {
   opacity: 0.8;
 }
-
-
