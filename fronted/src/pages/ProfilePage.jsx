@@ -1,4 +1,5 @@
 import { useEffect, useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../auth/AuthContext";
 import Navbar from "../components/Navbar";
 import Badge from "../components/Badge";
@@ -7,10 +8,12 @@ import {
   updateUser,
   getUserBadges,
   getUserProgress,
+  deleteUser,
 } from "../api/users.api";
 
 export default function ProfilePage() {
-  const { user, setUser } = useContext(AuthContext);
+  const { user, setUser, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const [badges, setBadges] = useState([]);
   const [progress, setProgress] = useState({ points: 0, hoursSpent: 0 });
@@ -22,9 +25,7 @@ export default function ProfilePage() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
-  /* ---------------------------
-     Fetch badges & progress
-  ---------------------------- */
+  // Fetch badges & progress
   useEffect(() => {
     if (!user?.id) return;
 
@@ -45,9 +46,7 @@ export default function ProfilePage() {
     fetchExtras();
   }, [user?.id]);
 
-  /* ---------------------------
-     Save profile changes
-  ---------------------------- */
+  // Save profile changes
   const handleSave = async () => {
     setSaving(true);
     setError("");
@@ -60,9 +59,8 @@ export default function ProfilePage() {
 
       const rawUser = res.data.user ?? res.data;
 
-      // 🔥 Normalisation du user
       const updatedUser = {
-        ...user, // conserve token, role, etc.
+        ...user,
         id: rawUser.id || rawUser._id,
         name: rawUser.name,
         email: rawUser.email,
@@ -81,6 +79,23 @@ export default function ProfilePage() {
     }
   };
 
+  // Delete account
+  const handleDeleteAccount = async () => {
+    const confirmDelete = window.confirm(
+      "Do you really want to delete your account?"
+    );
+    if (!confirmDelete) return;
+
+    try {
+      await deleteUser(user.id);
+      logout();
+      navigate("/");
+    } catch (err) {
+      console.error(err);
+      alert("Failed to delete account");
+    }
+  };
+
   if (loading) return <Loader />;
 
   return (
@@ -90,9 +105,7 @@ export default function ProfilePage() {
       <div className="profile-container">
         {/* HEADER */}
         <div className="profile-header">
-          <div className="avatar">
-            {user.name?.charAt(0).toUpperCase()}
-          </div>
+          <div className="avatar">{user.name?.charAt(0).toUpperCase()}</div>
 
           <div className="user-info">
             {isEditing ? (
@@ -122,14 +135,10 @@ export default function ProfilePage() {
                 <button onClick={handleSave} disabled={saving}>
                   {saving ? "Saving..." : "Save Changes"}
                 </button>
-                <button onClick={() => setIsEditing(false)}>
-                  Cancel
-                </button>
+                <button onClick={() => setIsEditing(false)}>Cancel</button>
               </>
             ) : (
-              <button onClick={() => setIsEditing(true)}>
-                Edit Profile
-              </button>
+              <button onClick={() => setIsEditing(true)}>Edit Profile</button>
             )}
           </div>
         </div>
@@ -163,9 +172,24 @@ export default function ProfilePage() {
             )}
           </div>
         </div>
+
+        {/* DELETE ACCOUNT BUTTON */}
+        <div style={{ marginTop: "30px" }}>
+          <button
+            style={{
+              backgroundColor: "#d9363e",
+              color: "white",
+              padding: "10px 16px",
+              border: "none",
+              borderRadius: "6px",
+              cursor: "pointer",
+            }}
+            onClick={handleDeleteAccount}
+          >
+            Delete my account
+          </button>
+        </div>
       </div>
     </div>
   );
 }
-
-

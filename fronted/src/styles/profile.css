@@ -136,3 +136,21 @@
 .edit-buttons button:last-child {
   background-color: #0f3460;
 }
+
+.delete-account-btn {
+  margin-top: 30px;
+  background: transparent;
+  color: #e94560;;
+  border: 1px solid #e94560;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.delete-account-btn:hover {
+  background: #e94560;
+  color: white;
+}
+
+
