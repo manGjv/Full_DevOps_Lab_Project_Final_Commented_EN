@@ -1,0 +1,83 @@
+/* CONTENEUR AUTH */
+.auth-container {
+  max-width: 400px;
+  margin: 80px auto;
+  padding: 40px 30px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.auth-container:hover {
+  transform: translateY(-3px);
+}
+
+/* Titres */
+.auth-container h2 {
+  margin-bottom: 25px;
+  color: #162447;
+  font-size: 28px;
+}
+
+
+/* INPUTS */
+.auth-container input {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+/* Inputs background & text */
+.auth-container input[type="text"],
+.auth-container input[type="password"],
+.auth-container input[type="email"] {
+  background-color: #f5f7fa;
+  color: #162447;
+}
+
+/* BUTTONS */
+.auth-container button {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #e94560, #ff4e50);
+  color: white;
+  cursor: pointer;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.auth-container button:hover {
+  transform: translateY(-3px);
+  opacity: 0.85;
+}
+
+/* MESSAGE D’ERREUR */
+.error {
+  color: #ff4e50;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+/* LIEN AUTH (ex: mot de passe oublié) */
+.auth-container a {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #e94560;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.auth-container a:hover {
+  opacity: 0.8;
+}

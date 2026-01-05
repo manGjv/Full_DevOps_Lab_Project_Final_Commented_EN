@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import express from "express";
 import fs from "node:fs";
 import path  from "node:path";
+import cors from "cors";
 import { fileURLToPath } from "node:url";
 import { createRequire } from "node:module";
 import { errorHandler } from "./utils/errorHandler.js";
@@ -15,6 +16,11 @@ const rootDir = path.join(__dirname, "../..");
 dotenv.config({path: path.join(rootDir, ".env")});
 
 const app = express();
+
+app.use(cors({
+  origin: "http://localhost:5173", // frontend URL
+  credentials: true
+}));
 
 app.use(express.json());
 
