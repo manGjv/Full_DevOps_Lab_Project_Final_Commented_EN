@@ -1,0 +1,297 @@
+/* HERO SECTION */
+.landing-container {
+  text-align: center;
+  padding: 110px 20px;
+  background: linear-gradient(135deg, #162447, #1f4068);
+  color: white;
+}
+
+.landing-container h1 {
+  font-size: 52px;
+  margin-bottom: 20px;
+  background: linear-gradient(90deg, #e94560, #ff4e50);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+}
+
+.landing-subtitle {
+  font-size: 22px;
+  margin-bottom: 20px;
+  color: #f5f7fa;
+}
+
+.landing-description {
+  max-width: 700px;
+  margin: 0 auto 40px;
+  font-size: 18px;
+  line-height: 1.6;
+  color: #e3e7ef;
+}
+
+/* CTA BUTTONS */
+.cta-buttons .btn {
+  display: inline-block;
+  padding: 14px 35px;
+  margin: 0 10px;
+  background-color: #e94560;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.cta-buttons .btn:hover {
+  opacity: 0.85;
+  transform: translateY(-3px);
+}
+
+.cta-buttons .btn-secondary {
+  background-color: white;
+  color: #1f4068;
+}
+
+/* SECTIONS */
+.features-section {
+  max-width: 1100px;
+  margin: 70px auto;
+  padding: 0 20px;
+  text-align: center;
+}
+
+.features-section h2 {
+  font-size: 36px;
+  margin-bottom: 40px;
+  color: #162447;
+}
+
+.alt-section {
+  background-color: #f5f7fa;
+  padding: 60px 20px;
+  margin: 0;
+}
+
+/* CARDS */
+.features-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  justify-content: center;
+}
+
+.feature-card {
+  background-color: white;
+  border-radius: 14px;
+  padding: 30px 25px;
+  flex: 1 1 260px;
+  max-width: 320px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+
+.feature-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.15);
+}
+
+.feature-card h3 {
+  color: #e94560;
+  margin-bottom: 15px;
+}
+
+.feature-card p {
+  color: #555;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* FINAL CTA */
+.final-cta {
+  background: linear-gradient(135deg, #1f4068, #162447);
+  color: white;
+  text-align: center;
+  padding: 90px 20px;
+}
+
+.final-cta h2 {
+  font-size: 38px;
+  color: #e3e7ef;
+  margin-bottom: 20px;
+}
+
+.final-cta p {
+  font-size: 18px;
+  margin-bottom: 35px;
+  color: #e3e7ef;
+}
+
+.btn-cta {
+  background-color: #e94560;
+  color: white;
+  padding: 16px 42px;
+  font-size: 18px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.btn-cta:hover {
+  opacity: 0.9;
+}
+
+/* COVER SECTION */
+.cover-section {
+  background: linear-gradient(135deg, #e8f1ff, #f3f8ff);
+  padding: 90px 20px;
+}
+
+.cover-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 50px;
+}
+
+.cover-text {
+  flex: 1;
+}
+
+.cover-text h2 {
+  font-size: 36px;
+  margin-bottom: 25px;
+  color: #162447;
+}
+
+.cover-text ul {
+  list-style: none;
+  padding: 0;
+}
+
+.cover-text li {
+  font-size: 18px;
+  color: #444;
+  margin-bottom: 18px;
+  padding-left: 30px;
+  position: relative;
+  line-height: 1.6;
+}
+
+/* Custom bullet */
+.cover-text li::before {
+  content: "✔";
+  position: absolute;
+  left: 0;
+  color: #e94560;
+  font-weight: bold;
+}
+
+/* IMAGE */
+.cover-image {
+  flex: 1;
+  text-align: right;
+}
+
+.cover-image img {
+  max-width: 420px;
+  width: 100%;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .cover-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .cover-image {
+    text-align: center;
+  }
+
+  .cover-text li {
+    padding-left: 25px;
+    text-align: left;
+  }
+}
+
+/* HOW IT WORKS – STEPS */
+.steps-section {
+  background-color: #f1f4f9;
+  padding: 90px 20px;
+  text-align: center;
+}
+
+.steps-section h2 {
+  font-size: 36px;
+  margin-bottom: 60px;
+  color: #162447;
+}
+
+.steps-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  position: relative;
+}
+
+/* STEP */
+.step {
+  flex: 1;
+  max-width: 320px;
+}
+
+.step h3 {
+  margin-top: 20px;
+  margin-bottom: 12px;
+  font-size: 22px;
+  color: #162447;
+}
+
+.step p {
+  font-size: 16px;
+  color: #555;
+  line-height: 1.6;
+}
+
+/* CIRCLE */
+.step-circle {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto;
+  border-radius: 50%;
+  background-color: #e94560;
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* LINE BETWEEN STEPS */
+.step-line {
+  flex: 0 0 80px;
+  height: 2px;
+  background-color: #d6dbe6;
+  margin-top: 30px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .steps-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .step-line {
+    width: 2px;
+    height: 50px;
+    margin: 20px 0;
+  }
+}

@@ -1,0 +1,73 @@
+.admin-container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #f7f7f7;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  font-family: Arial, sans-serif;
+}
+
+.admin-container h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.admin-section {
+  margin-bottom: 30px;
+  padding: 15px;
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.admin-section h2 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.admin-section input,
+.admin-section select,
+.admin-section textarea {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 8px 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.admin-section textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+.admin-section button {
+  margin-right: 10px;
+  padding: 8px 16px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.admin-section button:hover {
+  background-color: #45a049;
+}
+
+.admin-msg {
+  color: #007700;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.quiz-question {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  background: #fafafa;
+}

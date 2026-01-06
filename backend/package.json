@@ -11,10 +11,14 @@
     "dev": "nodemon src/index.js",
     "test": "vitest run",
     "test:watch": "vitest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "seed:courses": "node scripts/seedCourses.js",
+    "seed:quizzes": "node scripts/seedQuizzes.js",
+    "seed:all": "npm run seed:courses && npm run seed:quizzes"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",

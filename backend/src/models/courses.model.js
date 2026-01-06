@@ -5,7 +5,9 @@ const lessonSchema = new mongoose.Schema(
   {
     title:    { type: String, required: true },
     type:     { type: String, enum: ["video", "text", "interactive", "lab"], default: "video" },
-    duration: { type: String }
+    duration: { type: String },
+    content:  { type: String },
+    url:  { type: String }     
   },
   { _id: false }
 );

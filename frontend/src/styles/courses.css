@@ -1,0 +1,158 @@
+/* PAGE */
+.courses-container {
+  max-width: 1200px;
+  margin: 60px auto;
+  padding: 0 20px;
+}
+
+h2 {
+  font-size: 36px;
+  margin-bottom: 30px;
+  color: #162447;
+}
+
+/* FILTER */
+.filter {
+  margin-bottom: 30px;
+}
+
+.filter select {
+  padding: 8px 12px;
+  border-radius: 6px;
+}
+
+/* GRID */
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+@media (max-width: 900px) {
+  .courses-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .courses-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* CARD */
+.course-card {
+  background: white;
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.course-card:hover {
+  transform: translateY(-6px);
+}
+
+.course-card h3 {
+  margin: 12px 0;
+  font-size: 22px;
+}
+
+.course-card p {
+  flex-grow: 1;
+  color: #555;
+}
+
+/* LEVEL BADGE */
+.course-level {
+  width: fit-content;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+/* LEVEL COLORS */
+.level-beginner .course-level {
+  background: #e6f9f0;
+  color: #1e8e5a;
+}
+
+.level-intermediate .course-level {
+  background: #fff4e5;
+  color: #d97706;
+}
+
+.level-expert .course-level {
+  background: #fde8e8;
+  color: #dc2626;
+}
+
+/* LINK */
+.course-card a {
+  margin-top: 16px;
+  font-weight: 600;
+  color: #e94560;
+  text-decoration: none;
+}
+
+.course-card a:hover {
+  text-decoration: underline;
+}
+
+/* COURSE DETAIL */
+.course-detail-container {
+  max-width: 900px;
+  margin: 60px auto;
+  background: white;
+  padding: 40px;
+  border-radius: 18px;
+  box-shadow: 0 20px 45px rgba(0,0,0,0.1);
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  color: #e94560;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.lesson-list {
+  list-style: none;
+  padding: 0;
+}
+
+.lesson-item {
+  margin-bottom: 40px;
+}
+
+.lesson-item iframe {
+  width: 100%;
+  height: 400px;
+  border-radius: 12px;
+}
+
+/* QUIZ */
+.quiz-box {
+  margin-top: 50px;
+  padding: 30px;
+  background: #f1f4f9;
+  border-radius: 14px;
+  text-align: center;
+}
+
+.btn-primary {
+  margin-top: 14px;
+  padding: 12px 26px;
+  border: none;
+  border-radius: 10px;
+  background: #e94560;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}

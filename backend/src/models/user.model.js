@@ -12,7 +12,12 @@ const userSchema = new mongoose.Schema({
     points: { type: Number, default: 0 },
     hoursSpent: { type: Number, default: 0 },
     modulesCompleted: { type: Number, default: 0 },
-    badges: { type: [String], default: [] }
+     badges: [{
+    quizTitle: String,
+    courseId: { type: mongoose.Schema.Types.ObjectId, ref: 'Course' },
+    earnedAt: Date
+  }]
+
 
 }, { timestamps: true });
 
